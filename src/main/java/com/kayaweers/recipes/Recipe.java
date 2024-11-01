@@ -13,7 +13,8 @@ public class Recipe {
     private UUID uuid;
     private String title;
     private String preparation;
-    @OneToMany(mappedBy = "recipe")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "recipe_id")
     private List<Ingredient> ingredients;
 
     protected Recipe() {}

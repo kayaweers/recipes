@@ -14,9 +14,6 @@ public class Ingredient {
     @Enumerated(EnumType.STRING)
     private MeasurementUnit unit;
     private String name;
-    @ManyToOne
-    @JoinColumn(name = "recipe_id")
-    private Recipe recipe;
 
     protected Ingredient() {}
 
@@ -30,9 +27,5 @@ public class Ingredient {
 
     public String getName() {
         return name;
-    }
-
-    public Recipe getRecipe() {
-        return recipe;
     }
 }
