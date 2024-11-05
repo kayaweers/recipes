@@ -1,4 +1,4 @@
-package com.kayaweers.recipes;
+package com.kayaweers.recipes.model;
 
 public enum MeasurementUnit {
 
