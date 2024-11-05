@@ -10,14 +10,14 @@ public class Ingredient {
 
     @Id
     private UUID uuid;
-    private int quantity;
+    private double quantity;
     @Enumerated(EnumType.STRING)
     private MeasurementUnit unit;
     private String name;
 
     protected Ingredient() {}
 
-    public int getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
 
