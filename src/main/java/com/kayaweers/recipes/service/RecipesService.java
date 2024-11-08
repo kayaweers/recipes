@@ -8,18 +8,26 @@ import com.kayaweers.recipes.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Service
 public class RecipesService {
 
     @Autowired
     private RecipeRepository recipeRepository;
 
+    public RecipeDto getRecipe(String id){
+        Optional<Recipe> recipe = recipeRepository.findById(UUID.fromString(id));
+        return recipe.map(this::mapToRecipeDto).orElse(null);
+    }
+
     public RecipeDto getRecipeForTitle(String title){
         Recipe recipe = recipeRepository.getRecipeByTitle(title);
         if (recipe == null) {
             return null;
         }
-        return new RecipeDto(recipe.getTitle(), recipe.getPreparation(), recipe.getIngredients().stream().map(this::mapToIngredientDto).toList());
+        return mapToRecipeDto(recipe);
     }
 
     public void storeRecipe(RecipeDto recipeDto) {
@@ -27,8 +35,12 @@ public class RecipesService {
         recipeRepository.save(recipe);
     }
 
+    private RecipeDto mapToRecipeDto(Recipe recipe) {
+        return new RecipeDto(recipe.getUuid().toString(), recipe.getTitle(), recipe.getPreparation(), recipe.getIngredients().stream().map(this::mapToIngredientDto).toList());
+    }
+
     private IngredientDto mapToIngredientDto(Ingredient ingredient){
-        return new IngredientDto(ingredient.getName(), ingredient.getUnit(), ingredient.getQuantity());
+        return new IngredientDto(ingredient.getUuid().toString(), ingredient.getName(), ingredient.getUnit(), ingredient.getQuantity());
     }
 
     private Ingredient mapToIngredient(IngredientDto ingredientDto){

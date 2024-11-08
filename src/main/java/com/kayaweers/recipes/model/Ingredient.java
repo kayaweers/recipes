@@ -24,6 +24,10 @@ public class Ingredient {
         this.unit = unit;
     }
 
+    public UUID getUuid() {
+        return uuid;
+    }
+
     public double getQuantity() {
         return quantity;
     }

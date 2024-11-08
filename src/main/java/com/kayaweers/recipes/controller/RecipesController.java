@@ -19,8 +19,17 @@ public class RecipesController {
         return "Recipes application";
     }
 
+    @GetMapping("/{id}")
+    public RecipeDto getRecipe(@PathVariable String id){
+        RecipeDto recipe = recipesService.getRecipe(id);
+        if (recipe == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found");
+        }
+        return recipe;
+    }
+
     @GetMapping("/search")
-    public RecipeDto getRecipe(@RequestParam(name = "title") String title){
+    public RecipeDto searchRecipe(@RequestParam(name = "title") String title){
         RecipeDto recipe = recipesService.getRecipeForTitle(title);
         if (recipe == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found");
