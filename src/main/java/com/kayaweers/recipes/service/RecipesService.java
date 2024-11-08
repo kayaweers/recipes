@@ -19,11 +19,20 @@ public class RecipesService {
         if (recipe == null) {
             return null;
         }
-        return new RecipeDto(recipe.getTitle(), recipe.getPreparation(), recipe.getIngredients().stream().map(this::transferIngredient).toList());
+        return new RecipeDto(recipe.getTitle(), recipe.getPreparation(), recipe.getIngredients().stream().map(this::mapToIngredientDto).toList());
     }
 
-    private IngredientDto transferIngredient(Ingredient ingredient){
+    public void storeRecipe(RecipeDto recipeDto) {
+        Recipe recipe = new Recipe(recipeDto.title(), recipeDto.preparation(), recipeDto.ingredients().stream().map(this::mapToIngredient).toList());
+        recipeRepository.save(recipe);
+    }
+
+    private IngredientDto mapToIngredientDto(Ingredient ingredient){
         return new IngredientDto(ingredient.getName(), ingredient.getUnit(), ingredient.getQuantity());
+    }
+
+    private Ingredient mapToIngredient(IngredientDto ingredientDto){
+        return new Ingredient(ingredientDto.name(), ingredientDto.quantity(), ingredientDto.unit());
     }
 
 }

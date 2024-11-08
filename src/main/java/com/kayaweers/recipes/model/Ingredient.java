@@ -9,13 +9,20 @@ import java.util.UUID;
 public class Ingredient {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID uuid;
+    private String name;
     private double quantity;
     @Enumerated(EnumType.STRING)
     private MeasurementUnit unit;
-    private String name;
 
     protected Ingredient() {}
+
+    public Ingredient(String name, double quantity, MeasurementUnit unit) {
+        this.name = name;
+        this.quantity = quantity;
+        this.unit = unit;
+    }
 
     public double getQuantity() {
         return quantity;

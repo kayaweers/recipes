@@ -10,14 +10,21 @@ import java.util.UUID;
 public class Recipe {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID uuid;
     private String title;
     private String preparation;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "recipe_id")
+    @JoinColumn(name = "recipe_id", nullable = false)
     private List<Ingredient> ingredients;
 
     protected Recipe() {}
+
+    public Recipe(String title, String preparation, List<Ingredient> ingredients) {
+        this.title = title;
+        this.preparation = preparation;
+        this.ingredients = ingredients;
+    }
 
     public UUID getUuid() {
         return uuid;

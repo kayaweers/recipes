@@ -28,4 +28,9 @@ public class RecipesController {
         return recipe;
     }
 
+    @PostMapping("/add")
+    public void addRecipe(@RequestBody RecipeDto recipeDto){
+        recipesService.storeRecipe(recipeDto);
+    }
+
 }
