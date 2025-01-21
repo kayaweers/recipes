@@ -14,8 +14,12 @@ import java.util.UUID;
 @Service
 public class RecipesService {
 
+    private final RecipeRepository recipeRepository;
+
     @Autowired
-    private RecipeRepository recipeRepository;
+    public RecipesService(RecipeRepository recipeRepository) {
+        this.recipeRepository = recipeRepository;
+    }
 
     public RecipeDto getRecipe(String id){
         Optional<Recipe> recipe = recipeRepository.findById(UUID.fromString(id));
@@ -30,9 +34,10 @@ public class RecipesService {
         return mapToRecipeDto(recipe);
     }
 
-    public void storeRecipe(RecipeDto recipeDto) {
+    public String storeRecipe(RecipeDto recipeDto) {
         Recipe recipe = new Recipe(recipeDto.title(), recipeDto.preparation(), recipeDto.ingredients().stream().map(this::mapToIngredient).toList());
-        recipeRepository.save(recipe);
+        Recipe storedRecipe = recipeRepository.save(recipe);
+        return storedRecipe.getUuid().toString();
     }
 
     private RecipeDto mapToRecipeDto(Recipe recipe) {

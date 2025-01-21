@@ -11,8 +11,12 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping("/recipes")
 public class RecipesController {
 
+    private final RecipesService recipesService;
+
     @Autowired
-    RecipesService recipesService;
+    public RecipesController(RecipesService recipesService) {
+        this.recipesService = recipesService;
+    }
 
     @GetMapping("/info")
     public String getInfo(){
@@ -37,9 +41,10 @@ public class RecipesController {
         return recipe;
     }
 
-    @PostMapping("/add")
-    public void addRecipe(@RequestBody RecipeDto recipeDto){
-        recipesService.storeRecipe(recipeDto);
+    @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
+    public String addRecipe(@RequestBody RecipeDto recipeDto){
+        return recipesService.storeRecipe(recipeDto);
     }
 
 }
