@@ -25,7 +25,7 @@ public class RecipesController {
 
     @GetMapping("/{id}")
     public RecipeDto getRecipe(@PathVariable String id){
-        RecipeDto recipe = recipesService.getRecipe(id);
+        final RecipeDto recipe = recipesService.getRecipe(id);
         if (recipe == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found");
         }
@@ -34,7 +34,7 @@ public class RecipesController {
 
     @GetMapping("/search")
     public RecipeDto searchRecipe(@RequestParam(name = "title") String title){
-        RecipeDto recipe = recipesService.getRecipeForTitle(title);
+        final RecipeDto recipe = recipesService.getRecipeForTitle(title);
         if (recipe == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found");
         }

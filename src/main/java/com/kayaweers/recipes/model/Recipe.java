@@ -26,6 +26,13 @@ public class Recipe {
         this.ingredients = ingredients;
     }
 
+    public Recipe(UUID uuid, String title, String preparation, List<Ingredient> ingredients) {
+        this.uuid = uuid;
+        this.title = title;
+        this.preparation = preparation;
+        this.ingredients = ingredients;
+    }
+
     public UUID getUuid() {
         return uuid;
     }

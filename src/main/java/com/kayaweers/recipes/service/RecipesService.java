@@ -22,21 +22,18 @@ public class RecipesService {
     }
 
     public RecipeDto getRecipe(String id){
-        Optional<Recipe> recipe = recipeRepository.findById(UUID.fromString(id));
+        final Optional<Recipe> recipe = recipeRepository.findById(UUID.fromString(id));
         return recipe.map(this::mapToRecipeDto).orElse(null);
     }
 
     public RecipeDto getRecipeForTitle(String title){
-        Recipe recipe = recipeRepository.getRecipeByTitle(title);
-        if (recipe == null) {
-            return null;
-        }
-        return mapToRecipeDto(recipe);
+        final Optional<Recipe> recipe = recipeRepository.getRecipeByTitle(title);
+        return recipe.map(this::mapToRecipeDto).orElse(null);
     }
 
     public String storeRecipe(RecipeDto recipeDto) {
-        Recipe recipe = new Recipe(recipeDto.title(), recipeDto.preparation(), recipeDto.ingredients().stream().map(this::mapToIngredient).toList());
-        Recipe storedRecipe = recipeRepository.save(recipe);
+        final Recipe recipe = new Recipe(recipeDto.title(), recipeDto.preparation(), recipeDto.ingredients().stream().map(this::mapToIngredient).toList());
+        final Recipe storedRecipe = recipeRepository.save(recipe);
         return storedRecipe.getUuid().toString();
     }
 
@@ -45,7 +42,7 @@ public class RecipesService {
     }
 
     private IngredientDto mapToIngredientDto(Ingredient ingredient){
-        return new IngredientDto(ingredient.getUuid().toString(), ingredient.getName(), ingredient.getUnit(), ingredient.getQuantity());
+        return new IngredientDto(ingredient.getUuid().toString(), ingredient.getName(), ingredient.getQuantity(), ingredient.getUnit());
     }
 
     private Ingredient mapToIngredient(IngredientDto ingredientDto){

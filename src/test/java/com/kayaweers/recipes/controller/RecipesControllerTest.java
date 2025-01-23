@@ -92,7 +92,7 @@ class RecipesControllerTest {
     }
 
     private RecipeDto getRecipeDto() {
-        IngredientDto pasta = new IngredientDto("444", "pasta", MeasurementUnit.G, 150);
+        IngredientDto pasta = new IngredientDto("444", "pasta", 150, MeasurementUnit.G);
         return new RecipeDto("123", "Pasta pesto", "prep", Collections.singletonList(pasta));
     }
 }
