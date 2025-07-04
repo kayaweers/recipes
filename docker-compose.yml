@@ -6,6 +6,8 @@ services:
       POSTGRES_PASSWORD: admin
     ports:
       - "5432:5432"  #Host port:container port
+    networks:
+      - app-network
     volumes:
       - postgres_data:/var/lib/postgresql/data
   pgadmin:
@@ -17,5 +19,17 @@ services:
       - "5431:80"
     depends_on:
       - postgres
+  recipe-backend:
+    image: recipe-service:latest
+    ports:
+      - "8081:8080"
+    networks:
+      - app-network
+    depends_on:
+      - postgres
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/postgres
+networks:
+  app-network:
 volumes: #to persist data
   postgres_data:
